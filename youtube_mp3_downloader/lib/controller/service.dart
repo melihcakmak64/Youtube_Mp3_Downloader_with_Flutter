@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 class DownloadController extends GetxController {
   final RxList<Video> _videoList = <Video>[].obs;
+
   VideoSearchList? searchResult;
   final YoutubeExplode youtube = YoutubeExplode();
   RxString currentUrl = "".obs;
@@ -21,7 +22,7 @@ class DownloadController extends GetxController {
         var stream = youtube.videos.streamsClient.get(streamInfo);
         var directory = await getExternalStorageDirectory();
         String downloadPath =
-            '${directory!.parent.parent.parent.parent.path}/Download';
+            '${directory!.parent.parent.parent.parent.path}/Download/MusicFolder';
         await Directory(downloadPath).create(recursive: true);
         File file = File('$downloadPath/$name.mp3');
         var fileStream = file.openWrite();

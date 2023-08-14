@@ -41,43 +41,36 @@ class _ResultPageState extends State<ResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'YouTube Search',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Results'),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Results'),
-        ),
-        body: Center(
-          child: Obx(
-            () {
-              if (controller.getList().isEmpty) {
-                return const CircularProgressIndicator();
-              } else {
-                return ListView.builder(
-                  controller: scrollController,
-                  itemCount: controller.getList().length,
-                  itemBuilder: (context, index) {
-                    var video = controller.getList()[index];
-                    return getCard(video);
-                  },
-                );
-              }
-            },
-          ),
+      body: Center(
+        child: Obx(
+          () {
+            if (controller.getList().isEmpty) {
+              return const CircularProgressIndicator();
+            } else {
+              return ListView.builder(
+                controller: scrollController,
+                itemCount: controller.getList().length,
+                itemBuilder: (context, index) {
+                  var video = controller.getList()[index];
+                  return getCard(video);
+                },
+              );
+            }
+          },
         ),
       ),
     );
   }
 
   Card getCard(Video video) {
-    final duration = Duration(milliseconds: video.duration!.inMilliseconds);
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    final seconds = duration.inSeconds.remainder(60);
+    final duration = video.duration;
+    final hours = duration?.inHours ?? 0;
+    final minutes = duration?.inMinutes?.remainder(60) ?? 0;
+    final seconds = duration?.inSeconds?.remainder(60) ?? 0;
 
     final formattedDuration = hours > 0
         ? '$hours:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}'
@@ -85,7 +78,12 @@ class _ResultPageState extends State<ResultPage> {
 
     return Card(
       child: ListTile(
-        leading: Image.network(video.thumbnails.mediumResUrl),
+        leading: FadeInImage.assetNetwork(
+          placeholder:
+              'assets/placeholder-image.png', // Path to your temporary placeholder image
+          image: video.thumbnails.mediumResUrl,
+          fit: BoxFit.cover,
+        ),
         title: Text(video.title + " ($formattedDuration)"),
         trailing: Obx(() {
           return controller.currentUrl.value == video.url

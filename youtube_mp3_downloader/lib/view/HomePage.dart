@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:music_downloader/view/ResultPage.dart';
 
-import 'ResultPage.dart';
 
 class HomePage extends StatelessWidget {
   final TextEditingController searchController = TextEditingController();

@@ -1,6 +1,6 @@
 {
-    "name": "youtube_mp3_downloader",
-    "short_name": "youtube_mp3_downloader",
+    "name": "music_downloader",
+    "short_name": "music_downloader",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
